@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SOP Insight Engine</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+
+        .header {
+            background: #2c3e50;
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .main-content {
+            padding: 40px;
+        }
+
+        .upload-section {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border: 2px dashed #dee2e6;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .upload-section.dragover {
+            border-color: #007bff;
+            background: #e3f2fd;
+        }
+
+        .upload-area {
+            cursor: pointer;
+        }
+
+        .upload-icon {
+            font-size: 3rem;
+            color: #6c757d;
+            margin-bottom: 20px;
+        }
+
+        .upload-text {
+            font-size: 1.2rem;
+            color: #495057;
+            margin-bottom: 15px;
+        }
+
+        .upload-subtext {
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
+
+        .file-input {
+            display: none;
+        }
+
+        .btn {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            margin: 10px;
+        }
+
+        .btn:hover {
+            background: #0056b3;
+        }
+
+        .btn:disabled {
+            background: #6c757d;
+            cursor: not-allowed;
+        }
+
+        .files-list {
+            margin-top: 20px;
+        }
+
+        .file-item {
+            background: white;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: between;
+            align-items: center;
+        }
+
+        .file-info {
+            flex-grow: 1;
+        }
+
+        .file-name {
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        .file-size {
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
+
+        .results-section {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 30px;
+            margin-top: 30px;
+            display: none;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            display: none;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #007bff;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .cluster-card {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-left: 4px solid #007bff;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .cluster-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        .similarity-score {
+            background: #e8f5e8;
+            color: #2d5a2d;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+
+        .document-list {
+            list-style: none;
+        }
+
+        .document-list li {
+            background: #f1f3f4;
+            padding: 10px 15px;
+            margin-bottom: 5px;
+            border-radius: 5px;
+            font-family: monospace;
+        }
+
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border: 1px solid #f5c6cb;
+        }
+
+        .success {
+            background: #d4edda;
+            color: #155724;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border: 1px solid #c3e6cb;
+        }
+
+        .info {
+            background: #d1ecf1;
+            color: #0c5460;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border: 1px solid #bee5eb;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>SOP Insight Engine</h1>
+            <p>AI-Powered Standard Operating Procedure Analysis</p>
+        </div>
+
+        <div class="main-content">
+            <!-- Upload Section -->
+            <div class="upload-section" id="uploadSection">
+                <div class="upload-area" onclick="document.getElementById('fileInput').click()">
+                    <div class="upload-icon">📄</div>
+                    <div class="upload-text">Click to upload or drag & drop SOP files</div>
+                    <div class="upload-subtext">Supports PDF and DOCX files (Max 16MB each)</div>
+                </div>
+                <input type="file" id="fileInput" class="file-input" multiple accept=".pdf,.docx">
+                
+                <div class="files-list" id="filesList"></div>
+                
+                <button class="btn" id="processBtn" onclick="processDocuments()" disabled>
+                    Analyze SOPs with AI
+                </button>
+            </div>
+
+            <!-- Loading Section -->
+            <div class="loading" id="loadingSection">
+                <div class="spinner"></div>
+                <p>Processing documents with AI...</p>
+            </div>
+
+            <!-- Results Section -->
+            <div class="results-section" id="resultsSection">
+                <h2>Analysis Results</h2>
+                <div id="resultsContent"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = 'http://localhost:5000';
+        let uploadedFiles = [];
+
+        // File upload handling
+        const fileInput = document.getElementById('fileInput');
+        const uploadSection = document.getElementById('uploadSection');
+        const filesList = document.getElementById('filesList');
+        const processBtn = document.getElementById('processBtn');
+
+        fileInput.addEventListener('change', handleFileSelect);
+        uploadSection.addEventListener('dragover', handleDragOver);
+        uploadSection.addEventListener('drop', handleDrop);
+        uploadSection.addEventListener('dragleave', handleDragLeave);
+
+        function handleFileSelect(event) {
+            const files = Array.from(event.target.files);
+            uploadFiles(files);
+        }
+
+        function handleDragOver(event) {
+            event.preventDefault();
+            uploadSection.classList.add('dragover');
+        }
+
+        function handleDrop(event) {
+            event.preventDefault();
+            uploadSection.classList.remove('dragover');
+            const files = Array.from(event.dataTransfer.files);
+            uploadFiles(files);
+        }
+
+        function handleDragLeave(event) {
+            uploadSection.classList.remove('dragover');
+        }
+
+        async function uploadFiles(files) {
+            const formData = new FormData();
+            
+            // Filter valid files
+            const validFiles = files.filter(file => {
+                const extension = file.name.split('.').pop().toLowerCase();
+                return ['pdf', 'docx'].includes(extension);
+            });
+
+            if (validFiles.length === 0) {
+                showError('Please select valid PDF or DOCX files.');
+                return;
+            }
+
+            validFiles.forEach(file => {
+                formData.append('files', file);
+            });
+
+            try {
+                showLoading();
+                const response = await fetch(`${API_BASE}/upload`, {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const result = await response.json();
+                hideLoading();
+
+                if (response.ok) {
+                    showSuccess(`Successfully uploaded ${result.count} file(s)`);
+                    uploadedFiles = result.files;
+                    updateFilesList();
+                    processBtn.disabled = uploadedFiles.length < 2;
+                } else {
+                    showError(result.error);
+                }
+            } catch (error) {
+                hideLoading();
+                showError('Upload failed: ' + error.message);
+            }
+        }
+
+        function updateFilesList() {
+            filesList.innerHTML = '';
+            
+            uploadedFiles.forEach(file => {
+                const fileItem = document.createElement('div');
+                fileItem.className = 'file-item';
+                fileItem.innerHTML = `
+                    <div class="file-info">
+                        <div class="file-name">${file.filename}</div>
+                        <div class="file-size">${formatFileSize(file.size)}</div>
+                    </div>
+                `;
+                filesList.appendChild(fileItem);
+            });
+        }
+
+        async function processDocuments() {
+            try {
+                showLoading('Processing documents with AI...');
+                
+                const response = await fetch(`${API_BASE}/process`, {
+                    method: 'POST'
+                });
+
+                const result = await response.json();
+                hideLoading();
+
+                if (response.ok) {
+                    showResults(result);
+                } else {
+                    showError(result.error);
+                }
+            } catch (error) {
+                hideLoading();
+                showError('Processing failed: ' + error.message);
+            }
+        }
+
+        function showResults(result) {
+            const resultsSection = document.getElementById('resultsSection');
+            const resultsContent = document.getElementById('resultsContent');
+            
+            let html = '';
+            
+            if (result.clustering_result && result.clustering_result.clusters) {
+                const clusters = result.clustering_result.clusters;
+                
+                html += `<div class="success">Found ${clusters.length} cluster(s) from ${result.processed_documents} document(s)</div>`;
+                
+                // Show chunk-level clustering if available
+                if (result.clustering_result.chunk_clustering) {
+                    const chunkClusters = result.clustering_result.chunk_clustering.clusters || [];
+                    html += `<div class="info">Chunk-level analysis: ${chunkClusters.length} semantic clusters found</div>`;
+                }
+                
+                clusters.forEach((cluster, index) => {
+                    html += `
+                        <div class="cluster-card">
+                            <div class="cluster-title">${cluster.cluster_label}</div>
+                            ${cluster.similarity_score ? `<div class="similarity-score">Similarity: ${(cluster.similarity_score * 100).toFixed(1)}%</div>` : ''}
+                            <p><strong>Documents in this cluster:</strong></p>
+                            <ul class="document-list">
+                                ${cluster.documents.map(doc => `<li>${doc.filename}</li>`).join('')}
+                            </ul>
+                        </div>
+                    `;
+                });
+
+                // Show similarity analysis if available
+                if (result.clustering_result.similarity_analysis) {
+                    const analysis = result.clustering_result.similarity_analysis;
+                    html += `
+                        <div class="cluster-card">
+                            <div class="cluster-title">Detailed Similarity Analysis</div>
+                            <p><strong>Procedure Type:</strong> ${analysis.procedure_type}</p>
+                            
+                            ${analysis.key_similarities && analysis.key_similarities.length > 0 ? `
+                                <p><strong>Key Similarities:</strong></p>
+                                <ul>
+                                    ${analysis.key_similarities.map(sim => `<li>${sim}</li>`).join('')}
+                                </ul>
+                            ` : ''}
+                            
+                            ${analysis.key_differences && analysis.key_differences.length > 0 ? `
+                                <p><strong>Key Differences:</strong></p>
+                                <ul>
+                                    ${analysis.key_differences.map(diff => `<li>${diff}</li>`).join('')}
+                                </ul>
+                            ` : ''}
+                            
+                            ${analysis.safety_parameters ? `<p><strong>Safety Parameters:</strong> ${analysis.safety_parameters}</p>` : ''}
+                            ${analysis.operational_differences ? `<p><strong>Operational Differences:</strong> ${analysis.operational_differences}</p>` : ''}
+                            ${analysis.summary ? `<p><strong>Summary:</strong> ${analysis.summary}</p>` : ''}
+                            
+                            ${analysis.embedding_analysis ? `
+                                <div style="margin-top: 20px; padding: 15px; background: #f0f8ff; border-radius: 8px;">
+                                    <h4>Embedding Analysis Details</h4>
+                                    <p><strong>Overall Embedding Similarity:</strong> ${(analysis.embedding_analysis.overall_similarity * 100).toFixed(1)}%</p>
+                                    <p><strong>Chunks Analyzed:</strong> ${analysis.embedding_analysis.chunks1_count} vs ${analysis.embedding_analysis.chunks2_count}</p>
+                                    <p><strong>High Similarity Pairs:</strong> ${analysis.embedding_analysis.high_similarity_pairs ? analysis.embedding_analysis.high_similarity_pairs.length : 0}</p>
+                                    <p><strong>Combined Score:</strong> ${(analysis.combined_similarity_score * 100).toFixed(1)}%</p>
+                                </div>
+                            ` : ''}
+                        </div>
+                    `;
+                }
+            } else {
+                html += '<div class="error">No clustering results available</div>';
+            }
+            
+            resultsContent.innerHTML = html;
+            resultsSection.style.display = 'block';
+        }
+
+        function showLoading(message = 'Loading...') {
+            const loadingSection = document.getElementById('loadingSection');
+            loadingSection.querySelector('p').textContent = message;
+            loadingSection.style.display = 'block';
+        }
+
+        function hideLoading() {
+            document.getElementById('loadingSection').style.display = 'none';
+        }
+
+        function showError(message) {
+            const errorDiv = document.createElement('div');
+            errorDiv.className = 'error';
+            errorDiv.textContent = message;
+            document.querySelector('.main-content').insertBefore(errorDiv, document.querySelector('.upload-section'));
+            
+            setTimeout(() => {
+                errorDiv.remove();
+            }, 5000);
+        }
+
+        function showSuccess(message) {
+            const successDiv = document.createElement('div');
+            successDiv.className = 'success';
+            successDiv.textContent = message;
+            document.querySelector('.main-content').insertBefore(successDiv, document.querySelector('.upload-section'));
+            
+            setTimeout(() => {
+                successDiv.remove();
+            }, 3000);
+        }
+
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+
+        // Check backend health on load
+        window.addEventListener('load', async () => {
+            try {
+                const response = await fetch(`${API_BASE}/health`);
+                if (!response.ok) {
+                    showError('Backend server is not running. Please start the Flask server.');
+                }
+            } catch (error) {
+                showError('Cannot connect to backend server. Please ensure Flask server is running on port 5000.');
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,7 @@
+# Flask Configuration
+FLASK_ENV=development
+FLASK_DEBUG=True
+
+# Upload Configuration
+MAX_FILE_SIZE=16777216  # 16MB in bytes
+UPLOAD_FOLDER=uploads
