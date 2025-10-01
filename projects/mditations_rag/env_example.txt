@@ -1,0 +1,2 @@
+GOOGLE_API_KEY=your_google_api_key_here
+OPENROUTER_API_KEY=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 

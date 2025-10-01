@@ -1,0 +1,63 @@
+# Product Requirements Document (PRD) - Stoic Journal with Meditations RAG
+
+## 1. Product Overview
+- A digital Stoic Journal that guides users with daily prompts for reflection.
+- Users write journal entries in response to prompts.
+- For each entry, the system fetches a relevant quote from Marcus Aurelius's "Meditations" and provides an LLM-powered reflection.
+- All data is private, encrypted, and ephemeral—entries are not saved after the session unless exported by the user.
+
+## 2. User Journey & Onboarding
+
+### 2.1 Landing Page & Onboarding
+- **Screen 1:** Welcome message.
+- **Screen 2:** Rationale behind the app, written in the first person ("I created this app because...").
+- **Screen 3:** Privacy assurance—everything entered is private and encrypted.
+- **Screen 4:** Interactive tooltips highlighting:
+    1. The daily Stoic prompt.
+    2. The journal entry textbox.
+    3. The "I'm done" button (submits entry for reflection).
+    4. The export button (download your entry).
+
+### 2.2 Main User Flow
+1. User lands on the website and completes onboarding.
+2. User sees the daily Stoic prompt and enters their journal entry in a textbox.
+3. User clicks "I'm done"—the LLM reflects on the entry (summarizes, detects emotional tone) and provides a relevant excerpt from Meditations.
+4. User can click "Export" to download their entry, the prompt, the LLM reflection, and the Meditations excerpt.
+5. System informs the user that entries are not saved and will be discarded after quitting—download is required for safekeeping.
+
+## 3. Key Features
+
+### 3.1 Stoic Prompts & Journaling
+- Curated daily Stoic prompts
+- Journal entry input
+- Ephemeral (in-session only) storage
+
+### 3.2 Reflection & Quote Retrieval
+- LLM-generated reflection on the user's entry
+- Retrieval of a relevant Meditations excerpt based on the entry's content/emotion
+
+### 3.3 User Interface (UI)
+- Onboarding flow with screens and tooltips
+- Main journaling interface with prompt, entry box, "I'm done", and export button
+- Clear privacy and data discard messaging
+
+### 3.4 Export & Data Management
+- Export entries (with prompt, reflection, and quote) as text or CSV
+- No persistent storage—data is lost after session unless exported
+
+### 3.5 Privacy & Security
+- All data is private and encrypted in-session
+- No data is stored on the server after the session ends
+- No logging of user entries
+
+## 4. Non-Goals
+- No public sharing, social features, or multi-user support
+- No persistent storage or cloud sync
+- No in-app analytics or AI analysis (export only)
+
+## 5. Success Criteria
+- Smooth onboarding and clear value proposition
+- User can journal daily with privacy and peace of mind
+- Each entry is paired with a meaningful reflection and quote
+- Export works reliably; user understands data is ephemeral
+- UI is simple, motivating, and robust to errors 
