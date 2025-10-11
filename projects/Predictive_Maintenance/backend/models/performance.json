@@ -1,0 +1,27 @@
+{
+  "health_model": {
+    "mse": 29.74518324543433,
+    "r2": 0.28105233766585014,
+    "cv_score_mean": 29.988398010068472,
+    "cv_score_std": 0.3644402427276902,
+    "last_trained": "2025-10-11T13:40:40.758670",
+    "training_samples": 20028,
+    "validation_samples": 5008
+  },
+  "failure_model": {
+    "accuracy": 1.0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1_score": 1.0,
+    "cv_score_mean": 1.0,
+    "cv_score_std": 0.0,
+    "last_trained": "2025-10-11T13:40:41.212886",
+    "training_samples": 20028,
+    "validation_samples": 5008,
+    "confusion_matrix": [
+      [
+        5008
+      ]
+    ]
+  }
+}
