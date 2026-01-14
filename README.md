@@ -65,38 +65,6 @@ This repository contains multiple AI, MLOps, and web application projects organi
 
 ---
 
-### 🎨 Magic Portfolio
-**Location**: `projects/Portfolio/magic-portfolio/`
-
-**Problem**: Developers, designers, and creatives need professional portfolios to showcase their work, but building one from scratch requires significant time and technical expertise. Many portfolio solutions are either too expensive, too restrictive, or require ongoing maintenance that distracts from actual creative work.
-
-**Solution**: A clean, beginner-friendly portfolio template that handles all the technical complexity while giving users full control over their content. Built with modern web technologies, it supports MDX-based content creation, automatic SEO optimization, and requires minimal setup to get a professional portfolio online.
-
-**Key Value**:
-- Get a professional portfolio running in minutes, not weeks
-- Write content in simple markdown format
-- Automatic SEO and social media optimization
-- Responsive design that works on all devices
-- Focus on content, not code
-
----
-
-### 🔧 Predictive Maintenance
-**Location**: `projects/Predictive_Maintenance/` and `projects/separate_files/`
-
-**Problem**: Equipment failures in manufacturing and industrial settings cause unexpected downtime, production losses, and expensive emergency repairs. Traditional maintenance schedules are either too frequent (wasting resources) or too infrequent (leading to failures). There's no way to know when equipment is actually about to fail.
-
-**Solution**: An IoT-based predictive maintenance system that continuously monitors equipment sensors, uses machine learning to predict failures before they happen, and alerts operators when maintenance is needed. This enables proactive maintenance scheduling, reduces unplanned downtime, and optimizes maintenance costs.
-
-**Key Value**:
-- Predict equipment failures before they occur
-- Reduce unplanned downtime and production losses
-- Optimize maintenance schedules based on actual equipment health
-- Real-time monitoring and alerting for critical equipment
-- Data-driven maintenance decisions instead of guesswork
-
----
-
 ## Repository Structure
 
 ```
