@@ -4,10 +4,12 @@ This repository contains multiple AI, MLOps, and web application projects organi
 
 ## Projects
 
-### 🏭 Manufacturing SOP Standardization
+### 🏭 DocQA
 **Location**: `projects/manufacturing-sop-standardization/`
 
 **Problem**: Manufacturing companies often struggle with inconsistent Standard Operating Procedures (SOPs) across different facilities, departments, or time periods. Manually comparing hundreds of documents to identify similarities and differences is time-consuming and error-prone, making standardization efforts nearly impossible at scale.
+
+This problem scales to different industries, but this Proof-of-Concept can demonstrate value for manufacturing companies first.
 
 **Solution**: An AI-powered document analysis system that automatically processes SOPs, identifies semantically similar procedures, clusters related documents, and highlights key differences. This enables organizations to standardize their operations efficiently and maintain consistency across their manufacturing processes.
 
