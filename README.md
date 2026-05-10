@@ -21,35 +21,6 @@ This problem scales to different industries, but this Proof-of-Concept can demon
 
 ---
 
-### 🏥 Health Tracker
-**Location**: `projects/Health Tracker/`
-
-**Problem**: People want to track their daily health metrics, medication adherence, and exercise habits, but existing solutions are either too complex, require subscriptions, or don't provide the insights needed to understand patterns over time. Without consistent tracking, it's difficult to identify correlations between lifestyle choices and health outcomes.
-
-**Solution**: A simple, personal health monitoring application that allows users to log daily metrics (mood, energy, water intake, sleep), track running activities, and monitor medication adherence. The system is designed to enable future analytics, helping users discover patterns and make informed decisions about their health.
-
-**Key Value**:
-- Centralized tracking of all health-related data in one place
-- Medication adherence monitoring to prevent missed doses
-- Exercise tracking to maintain fitness goals
-- Analytics-ready design for identifying health patterns and trends
-
----
-
-### 📚 Meditations RAG System
-**Location**: `projects/mditations_rag/`
-
-**Problem**: Philosophical texts like Marcus Aurelius's "Meditations" contain profound wisdom, but finding relevant passages for specific questions or situations requires extensive reading and memorization. Readers often struggle to connect philosophical concepts to their current life circumstances or find the right quote when they need guidance.
-
-**Solution**: A Retrieval-Augmented Generation (RAG) system that allows users to ask natural language questions about "Meditations" and receive contextual answers based on relevant passages from the text. The system understands the meaning behind questions and retrieves the most pertinent wisdom, making ancient philosophy accessible and applicable to modern life.
-
-**Key Value**:
-- Ask questions in plain language and get relevant philosophical guidance
-- Discover connections between different parts of the text
-- Access wisdom without needing to memorize entire passages
-- Deepen understanding through contextual exploration
-
----
 
 ### 🤖 MLOps Orchestration
 **Location**: `projects/MLOps-orchestration/`
@@ -83,28 +54,4 @@ This problem scales to different industries, but this Proof-of-Concept can demon
 └── README.md                               # This file
 ```
 
-## Getting Started
 
-Each project addresses a different problem domain and has its own setup instructions. Navigate to the specific project directory and follow the README.md file for that project. Most projects include:
-
-- Clear setup instructions
-- Example usage scenarios
-- Documentation of key features
-- Troubleshooting guides
-
-## Contributing
-
-When adding new projects:
-1. Create a new directory under `projects/`
-2. Include a comprehensive README.md that explains the problem being solved
-3. Update this main README.md
-4. Follow consistent naming conventions
-5. Document the problem-solution approach clearly
-
-## Benefits of Monorepo Structure
-
-- **Shared Learning**: See how different problems are solved across projects
-- **Code Reuse**: Common utilities and patterns can be shared
-- **Consistent Patterns**: Similar problems can leverage proven solutions
-- **Easy Exploration**: Discover related projects and their approaches
-- **Unified Management**: Single repository to clone and maintain
